@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Number Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <div class="input-group">
+            <input 
+                type="tel" 
+                id="phoneNumber" 
+                placeholder="Enter your phone number"
+                pattern="[0-9]+"
+                maxlength="10"
+            >
+        </div>
+        <button onclick="submitPhoneNumber()">Submit</button>
+        <div id="message" class="message"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
