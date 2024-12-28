@@ -1,34 +1,3 @@
-const path = require('path');
-
-// Add these constants after your other constants
-const CSV_FILE_PATH = path.join(__dirname, 'phone_numbers.csv');
-
-
-async function initializeCSV() {
-    try {
-        await fs.access(CSV_FILE_PATH);
-    } catch {
-        await fs.writeFile(CSV_FILE_PATH, 'Phone Number,Timestamp\n');
-    }
-}
-
-// Initialize CSV when server starts
-initializeCSV().catch(console.error);
-
-// Function to add phone number to CSV
-async function addPhoneToCSV(phoneNumber) {
-    try {
-        const timestamp = new Date().toISOString();
-        const csvLine = `${phoneNumber},${timestamp}\n`;
-        await fs.appendFile(CSV_FILE_PATH, csvLine);
-        return true;
-    } catch (error) {
-        console.error('Error writing to CSV:', error);
-        return false;
-    }
-}
-
-
 async function sendOTP() {
     const phoneNumber = document.getElementById('phoneNumber').value;
     const messageDiv = document.getElementById('message');
@@ -85,24 +54,10 @@ async function verifyOTP() {
         console.log(data);
 
         if (data.success) {
-            console.log(data.redirectUrl)
+            console.log(data.redirectUrl);
             messageDiv.innerText = data.message;
             messageDiv.className = 'message success';
-              // Add phone number to CSV asynchronously
-         try{     
-           const csvSuccess = await addPhoneToCSV(phoneNumber);
-           if (!csvSuccess) {
-               return res.status(500).json({
-                   success: false,
-                   message: 'Error storing phone number'
-               });
-           }
-        }
-        catch{
-            console.log(error);
-        }
             window.location.href = data.redirectUrl;
-          
         } else {
             messageDiv.innerText = data.message;
             messageDiv.className = 'message error';

@@ -1,12 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const twilio = require('twilio');
-const fs = require('fs').promises;
-
+const fs = require('fs');
 require('dotenv').config();
-
-
-
 
 const app = express();
 app.use(cors());
@@ -18,8 +14,6 @@ const client = twilio(
 );
 
 const otpStore = new Map();
-
-// Initialize CSV file if it doesn't exist
 
 app.post('/api/send-otp', async (req, res) => {
     try {
@@ -65,8 +59,6 @@ app.post('/api/verify-otp', async (req, res) => {
 
     if (storedData.code === parseInt(otp)) {
         otpStore.delete(phoneNumber);
-
-
         return res.status(200).json({ 
             success: true, 
             message: 'OTP verified successfully',
